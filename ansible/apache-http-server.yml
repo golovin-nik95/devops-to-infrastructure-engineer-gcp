@@ -1,0 +1,29 @@
+---
+- name: Install Apache HTTP Server
+  hosts: http_servers
+  become: yes
+  
+  tasks:
+  - name: ensure the latest apache is installed
+    apt:
+      name: apache2
+      state: present
+      update_cache: yes
+
+  - name: deploy html document to DocumentRoot
+    template:
+      src: ~/ansible/templates/index.html.j2
+      dest: /var/www/html/index.html
+    notify: 
+      - restart apache
+
+  - name: ensure apache is running
+    service:
+      name: apache2
+      state: started
+
+  handlers:
+  - name: restart apache
+    service:
+      name: apache2
+      state: restarted

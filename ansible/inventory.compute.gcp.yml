@@ -1,0 +1,7 @@
+plugin: gcp_compute
+projects:
+  - golovin-nik95-gcp-capstone
+groups:
+  http_servers: "'http-server-instance-' in name"
+auth_kind: serviceaccount
+service_account_file: ~/.ansible/account.json
